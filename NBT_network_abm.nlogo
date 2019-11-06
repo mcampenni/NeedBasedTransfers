@@ -1,4 +1,3 @@
-;when agents 'die' their variables can perhaps get shifted to thier patch?
 
 breed [links-link]
 
@@ -48,15 +47,6 @@ to setup
  
    ask turtles
   [
-;  if P1-osotua = true [ask turtle 0 [set give_osotua 1]]
-;  if P2-osotua = true [ask turtle 1 [set give_osotua 1]]
-;  ask turtle 0 [set generosity P1-generosity]
-;  ask turtle 1 [set generosity P2-generosity]
-  
-  ;if P-osotua = true [set give_osotua 1]
-  ;replace P-osotua (as a T/F var) with a slider (i.e., subpopulation of agents)
-  ;see just after square bracket
-  
   ;use a specific distribution to set generosity property of agents
   set generosity 100
   ;set generosity random-normal p-generosity 15
@@ -86,7 +76,6 @@ to setup
   set beta round agent_num / 100 * 20
   
   if pa-net = FALSE [
-    ;; comment next two lines of code if you implement a "preferential-attachment" network
     layout-circle (sort turtles) max-pxcor - 1
     wire-them
     ifelse small-world = TRUE [
@@ -134,10 +123,6 @@ to rewire-one
     setup
   ]
 
-  ;; record which button was pushed
-  ;set rewire-one? true
-  ;set rewire-all? false
-
   let potential-edges links with [ not rewired? ]
   ifelse any? potential-edges [
     ask one-of potential-edges [
@@ -157,9 +142,6 @@ to rewire-one
         die
       ]
     ]
-    ;; plot the results
-    ;let connected? do-calculations
-    ;do-plotting
   ]
   [ user-message "all edges have already been rewired once" ]
 end
@@ -170,10 +152,6 @@ to rewire-all
   if count turtles != agent_num [
     setup
   ]
-
-  ;; record which button was pushed
-  ;set rewire-one? false
-  ;set rewire-all? true
 
   ;; set up a variable to see if the network is connected
   let success? false
@@ -217,8 +195,6 @@ to rewire-all
     set success? TRUE
   ]
 
-  ;; do the plotting
-  ;do-plotting
 end
 
 
@@ -354,10 +330,7 @@ to go       ;This is the main loop for agents and cattle
    let node1 no-turtles
    let node2 no-turtles
    let first-node 0
-  
-  ;;this makes just random couples of agents
-   ;set players n-of 2 turtles with [coupled = 0]
-  
+   
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;  
   ;;this makes couples of connected nodes;;
     if any? turtles with [coupled = 0 AND active = 1] [
@@ -393,17 +366,6 @@ to go       ;This is the main loop for agents and cattle
      ]
    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-          
-;    ;just for debugging
-;    ;output-print (word "players size is: " count players)
-;    output-write (word count players "--")
-;    ask players [
-;      output-write who
-;      output-write active
-;      ;output-write cattle_list
-;      ;output-write net_received_list
-;    ]
-;    output-print ""
     
     ;if the agents "players" is not big enough (< 2 + 1 agents - otherwise the same couple will play over and over), a new coupling cycle starts
     if count players < 2 [set newplay 1]
@@ -434,6 +396,7 @@ to go       ;This is the main loop for agents and cattle
  ;;--------------------------------------------------------
  ;; this update transactions lists and alive agents runtime
  ;;--------------------------------------------------------
+
  if ticks = 0 [
    set counter 0
    set flag 0
